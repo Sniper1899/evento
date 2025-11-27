@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag actualizado para evitar zoom en móviles -->
+    <!-- Meta tag bloqueando zoom y ajustando viewport correctamente -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Juega y Recuerda</title>
+    <title>Juega y Recuerda - El mejor regalo para tus abuelos</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,6 +64,7 @@
             background-color: #F2E6D9;
             color: #341C11;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móviles */
         }
         
         h1, h2, h3, .font-title {
@@ -72,36 +73,43 @@
             color: #341C11;
         }
         
+        /* Fix para glitch de mapa en móviles: Promover capas */
+        .layer-fix {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform;
+        }
+
         /* Waves & Dividers */
         .wave-divider {
-            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg);
+            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); pointer-events: none;
         }
         .wave-divider svg, .wave-divider-top svg {
-            position: relative; display: block; width: calc(130% + 1.3px); height: 60px; /* Altura ajustada para móviles */
+            position: relative; display: block; width: calc(130% + 1.3px); height: 60px;
         }
         @media (min-width: 768px) {
             .wave-divider svg, .wave-divider-top svg { height: 100px; }
         }
         
         .wave-divider-top {
-            position: absolute; top: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0;
+            position: absolute; top: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; pointer-events: none;
         }
 
         /* Nav Buttons Style */
         .nav-btn {
             background-color: #E6D5B8;
             color: #341C11;
-            padding: 8px 16px; /* Ajuste padding responsive */
+            padding: 8px 16px;
             border-radius: 9999px;
             font-weight: 700;
-            font-size: 0.75rem; /* Fuente base más pequeña */
+            font-size: 0.75rem;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             box-shadow: 0 4px 0 #C5B292;
             transition: all 0.2s ease;
             display: inline-block;
             text-decoration: none;
-            white-space: nowrap; /* Evita que el texto se rompa */
+            white-space: nowrap;
         }
         @media (min-width: 1024px) {
             .nav-btn {
@@ -169,7 +177,7 @@
 
         /* Acordeón */
         .faq-item input:checked ~ .faq-content {
-            max-height: 300px; /* Aumentado por seguridad en móviles */
+            max-height: 300px;
             padding-bottom: 20px;
             opacity: 1;
         }
@@ -183,44 +191,47 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="absolute top-0 left-0 w-full z-50 p-4 flex flex-col md:flex-row justify-between items-center bg-transparent pointer-events-none">
-        <div class="flex items-center gap-3 mb-4 md:mb-0 pointer-events-auto w-full md:w-auto justify-center md:justify-start" data-aos="fade-down">
-            <div class="h-12 md:h-16 w-32 md:w-48 flex items-center justify-center md:justify-start">
-                <!-- LOGO LOCAL -->
-                <img src="imagenes/logo.svg" 
-                     onerror="this.src='https://placehold.co/200x80/transparent/341C11?text=LOGO+SVG'"
-                     alt="Logo Juega y Recuerda" 
-                     class="h-full w-auto object-contain hover:scale-105 transition-transform cursor-pointer">
+    <nav class="absolute top-0 left-0 w-full z-50 p-4 lg:p-6 flex flex-col md:flex-row justify-between items-center bg-transparent pointer-events-none">
+        <!-- Padding container ajustado -->
+        <div class="container mx-auto px-4 md:px-8 lg:px-24 flex flex-col md:flex-row justify-between items-center w-full">
+            <div class="flex items-center gap-3 mb-4 md:mb-0 pointer-events-auto w-full md:w-auto justify-center md:justify-start" data-aos="fade-down">
+                <div class="h-12 md:h-16 w-32 md:w-48 flex items-center justify-center md:justify-start">
+                    <!-- LOGO LOCAL -->
+                    <img src="imagenes/logo.svg" 
+                         onerror="this.src='https://placehold.co/200x80/transparent/341C11?text=LOGO+SVG'"
+                         alt="Logo Juega y Recuerda" 
+                         class="h-full w-auto object-contain hover:scale-105 transition-transform cursor-pointer">
+                </div>
             </div>
-        </div>
-        
-        <!-- Botones con ajuste de gap responsive -->
-        <div class="hidden md:flex gap-2 lg:gap-4 pointer-events-auto flex-wrap justify-center" data-aos="fade-down" data-aos-delay="100">
-            <a href="#" class="nav-btn">INICIO</a>
-            <a href="#beneficios" class="nav-btn">BENEFICIOS</a>
-            <a href="#actividades" class="nav-btn">ACTIVIDADES</a>
-            <a href="#mision" class="nav-btn">MISIÓN</a>
-        </div>
+            
+            <!-- Botones -->
+            <div class="hidden md:flex gap-2 lg:gap-4 pointer-events-auto flex-wrap justify-center" data-aos="fade-down" data-aos-delay="100">
+                <a href="#" class="nav-btn">INICIO</a>
+                <a href="#beneficios" class="nav-btn">BENEFICIOS</a>
+                <a href="#actividades" class="nav-btn">ACTIVIDADES</a>
+                <a href="#mision" class="nav-btn">MISIÓN</a>
+            </div>
 
-        <a href="#registro" class="hidden md:inline-block bg-brand-green text-white font-bold px-4 py-2 lg:px-6 lg:py-2 rounded-full shadow-lg hover:bg-brand-coffee transition-all transform hover:scale-105 pointer-events-auto text-sm lg:text-base" data-aos="fade-down" data-aos-delay="200">
-            <i class="fa-brands fa-whatsapp mr-2"></i> Apartar Lugar
-        </a>
+            <a href="#registro" class="hidden md:inline-block bg-brand-green text-white font-bold px-4 py-2 lg:px-6 lg:py-2 rounded-full shadow-lg hover:bg-brand-coffee transition-all transform hover:scale-105 pointer-events-auto text-sm lg:text-base" data-aos="fade-down" data-aos-delay="200">
+                <i class="fa-brands fa-whatsapp mr-2"></i> Apartar Lugar
+            </a>
+        </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <!-- Ajuste de padding: pt-24 en móvil, pt-32 en desktop para que no quede tan grande en laptop -->
     <header class="relative bg-brand-beige min-h-screen flex items-center justify-center pt-24 pb-20 md:pt-32 md:pb-32 overflow-hidden">
         
         <div class="absolute top-20 left-10 text-brand-yellow/30 text-4xl md:text-6xl animate-spin-slow"><i class="fa-solid fa-sun"></i></div>
         <div class="absolute bottom-40 right-20 text-brand-red/10 text-7xl md:text-9xl"><i class="fa-solid fa-heart"></i></div>
 
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
+        <!-- Padding lateral aumentado drásticamente en md y lg para evitar bordes pegados en laptops -->
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-32 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center relative z-10">
             
             <div class="text-center md:text-left order-2 md:order-1" data-aos="fade-right">
                 <div class="inline-block bg-white text-brand-coffee px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6 border border-brand-coffee/10 shadow-sm">
                     ✨ Experiencias inolvidables
                 </div>
-                <!-- Tamaños de fuente ajustados: text-4xl en móvil, 5xl en tablet/laptop, 7xl en pantallas grandes -->
+                
                 <h1 class="text-4xl md:text-5xl lg:text-7xl text-brand-coffee mb-4 md:mb-6 drop-shadow-sm leading-tight font-title">
                     Creando memorias<br>
                     <span class="text-brand-red relative inline-block">
@@ -258,9 +269,8 @@
 
             <div class="relative order-1 md:order-2 flex justify-center" data-aos="zoom-in">
                 <div class="absolute inset-0 border-2 border-dashed border-brand-coffee/20 rounded-full transform scale-110 animate-spin-slow"></div>
-                <!-- Imagen con tamaños responsivos: w-64 en móvil, w-80 en tablet/laptop pequeña, w-[480px] en desktop -->
+                <!-- Imagen responsiva ajustada -->
                 <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-[480px] lg:h-[480px] rounded-full overflow-hidden border-4 md:border-8 border-white shadow-2xl animate-float z-20">
-                    <!-- IMAGEN LOCAL: Hero -->
                     <img src="imagenes/hero-principal.jpg" 
                          onerror="this.src='https://images.unsplash.com/photo-1571579294901-7294db162788?q=80&w=600&auto=format&fit=crop'"
                          alt="Abuelos felices y cuidados" 
@@ -285,9 +295,9 @@
     </header>
 
     <!-- SECTION: BENEFICIOS -->
-    <!-- Padding reducido en móviles -->
     <section id="beneficios" class="py-16 md:py-24 bg-white relative z-20">
-        <div class="container mx-auto px-4 text-center">
+        <!-- Contenedor con padding lateral corregido -->
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-32 text-center">
             <div class="inline-block mb-4">
                 <i class="fa-solid fa-heart-circle-check text-brand-red text-3xl md:text-4xl animate-bounce"></i>
             </div>
@@ -326,7 +336,8 @@
 
     <!-- SECTION: ACTIVIDADES -->
     <section id="actividades" class="py-16 md:py-24 bg-brand-beige relative z-10">
-        <div class="container mx-auto px-4 relative z-10">
+        <!-- Contenedor con padding lateral corregido -->
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-32 relative z-10">
             <div class="text-center mb-10 md:mb-16" data-aos="zoom-in">
                 <span class="text-brand-red font-bold uppercase text-xs md:text-sm tracking-wider bg-white px-3 py-1 rounded-full shadow-sm">Agenda del Día</span>
                 <h2 class="text-3xl md:text-5xl text-brand-coffee font-title mt-4">Actividades Adaptadas</h2>
@@ -337,7 +348,6 @@
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all transform hover:-translate-y-2" data-aos="fade-up">
                     <div class="h-48 md:h-56 overflow-hidden relative">
                         <div class="absolute inset-0 bg-brand-coffee/10 group-hover:bg-transparent transition-colors z-10"></div>
-                        <!-- IMAGEN LOCAL: Juegos -->
                         <img src="imagenes/actividad-juegos.jpg" 
                              onerror="this.src='https://images.unsplash.com/photo-1606092195730-5d7b9af1ef4d?q=80&w=400'"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
@@ -354,7 +364,6 @@
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
                     <div class="h-48 md:h-56 overflow-hidden relative">
                         <div class="absolute top-4 left-4 z-20 bg-brand-yellow text-brand-coffee text-xs font-bold px-3 py-1 rounded-full shadow-md">⭐ Favorito</div>
-                        <!-- IMAGEN LOCAL: Baile -->
                         <img src="imagenes/actividad-baile.jpg" 
                              onerror="this.src='https://images.unsplash.com/photo-1545959711-d703195d222e?q=80&w=400'"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
@@ -370,7 +379,6 @@
                 </div>
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
                     <div class="h-48 md:h-56 overflow-hidden relative">
-                        <!-- IMAGEN LOCAL: Arte -->
                         <img src="imagenes/actividad-arte.jpg" 
                              onerror="this.src='https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?q=80&w=400'"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
@@ -396,7 +404,8 @@
     <section id="mision" class="relative bg-brand-blue py-20 md:py-32 overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 30px 30px;"></div>
 
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-10 md:gap-16 relative z-10">
+        <!-- Contenedor con padding lateral corregido -->
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-32 flex flex-col md:flex-row items-center gap-10 md:gap-16 relative z-10">
             
             <div class="md:w-1/2 text-white text-center md:text-left" data-aos="fade-right">
                 <div class="inline-block bg-white text-brand-blue px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6 border border-white/20 shadow-sm">
@@ -429,7 +438,8 @@
 
     <!-- SECTION: PREGUNTAS Y RESPUESTAS -->
     <section id="faq" class="py-16 md:py-24 bg-white relative">
-        <div class="container mx-auto px-4 max-w-3xl">
+        <!-- Contenedor con padding lateral corregido -->
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 max-w-4xl">
             <div class="text-center mb-10 md:mb-12" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl text-brand-coffee font-title">Preguntas y Respuestas</h2>
                 <div class="w-20 h-1 bg-brand-blue mx-auto mt-4 rounded-full"></div>
@@ -473,8 +483,10 @@
     </section>
 
     <!-- SECTION: MAPA -->
-    <section id="ubicacion" class="py-16 md:py-20 bg-brand-beige relative border-t border-brand-coffee/5">
-        <div class="container mx-auto px-4">
+    <!-- Agregamos 'layer-fix' para evitar el glitch en móviles -->
+    <section id="ubicacion" class="py-16 md:py-20 bg-brand-beige relative border-t border-brand-coffee/5 layer-fix" style="z-index: 0;">
+        <!-- Contenedor con padding lateral corregido -->
+        <div class="container mx-auto px-6 md:px-12 lg:px-24">
             <div class="text-center mb-8 md:mb-10">
                 <h2 class="text-3xl md:text-4xl text-brand-coffee font-title">Ubicación</h2>
             </div>
@@ -500,7 +512,7 @@
                     </a>
                 </div>
 
-                <div class="lg:w-2/3 h-64 md:h-80 rounded-2xl overflow-hidden relative">
+                <div class="lg:w-2/3 h-64 md:h-80 rounded-2xl overflow-hidden relative layer-fix">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.577907572626!2d-99.15396592398555!3d19.34415848191632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fe06e570f723%3A0x67a35368a1d75c87!2sParque%20Ecol%C3%B3gico%20Huayamilpas!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe" 
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -509,8 +521,8 @@
         </div>
     </section>
 
-    <!-- FOOTER: Padding responsive (pt-24 en móvil, pt-40 en desktop) -->
-    <footer id="registro" class="bg-brand-dark-beige relative pt-24 md:pt-40 pb-10 text-brand-coffee overflow-hidden">
+    <!-- FOOTER: Agregamos 'layer-fix' y z-index explícito -->
+    <footer id="registro" class="bg-brand-dark-beige relative pt-24 md:pt-40 pb-10 text-brand-coffee overflow-hidden layer-fix" style="z-index: 10;">
         <!-- Curva superior -->
         <div class="absolute top-0 left-0 w-full h-10 md:h-16 bg-brand-beige rounded-b-[50%]"></div>
 
