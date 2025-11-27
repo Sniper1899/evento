@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta tag actualizado para evitar zoom en móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Juega y Recuerda</title>
     
     <!-- Tailwind CSS -->
@@ -31,7 +32,7 @@
                         'brand-yellow': '#f6b83b',     
                         'brand-beige': '#F2E6D9',      
                         'brand-coffee': '#341C11',
-                        'brand-dark-beige': '#E6D5B8', /* Nuevo color para el Footer */
+                        'brand-dark-beige': '#E6D5B8',
                         'btn-tan': '#E6D5B8',
                         'btn-tan-shadow': '#C5B292',
                     },
@@ -76,8 +77,12 @@
             position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg);
         }
         .wave-divider svg, .wave-divider-top svg {
-            position: relative; display: block; width: calc(130% + 1.3px); height: 100px;
+            position: relative; display: block; width: calc(130% + 1.3px); height: 60px; /* Altura ajustada para móviles */
         }
+        @media (min-width: 768px) {
+            .wave-divider svg, .wave-divider-top svg { height: 100px; }
+        }
+        
         .wave-divider-top {
             position: absolute; top: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0;
         }
@@ -86,17 +91,25 @@
         .nav-btn {
             background-color: #E6D5B8;
             color: #341C11;
-            padding: 10px 24px;
+            padding: 8px 16px; /* Ajuste padding responsive */
             border-radius: 9999px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.75rem; /* Fuente base más pequeña */
             letter-spacing: 0.05em;
             text-transform: uppercase;
             box-shadow: 0 4px 0 #C5B292;
             transition: all 0.2s ease;
             display: inline-block;
             text-decoration: none;
+            white-space: nowrap; /* Evita que el texto se rompa */
         }
+        @media (min-width: 1024px) {
+            .nav-btn {
+                padding: 10px 24px;
+                font-size: 0.85rem;
+            }
+        }
+
         .nav-btn:hover {
             transform: translateY(2px);
             box-shadow: 0 2px 0 #C5B292;
@@ -111,18 +124,22 @@
         .btn-blue {
             background-color: #58baa6;
             color: white;
-            padding: 14px 40px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-weight: 700;
             transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(88, 186, 166, 0.4);
             text-transform: uppercase;
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
             display: inline-flex;
             align-items: center;
             gap: 10px;
         }
+        @media (min-width: 768px) {
+            .btn-blue { padding: 14px 40px; font-size: 1rem; }
+        }
+        
         .btn-blue:hover {
             transform: translateY(-3px) scale(1.02);
             background-color: #469c8b;
@@ -152,7 +169,7 @@
 
         /* Acordeón */
         .faq-item input:checked ~ .faq-content {
-            max-height: 200px;
+            max-height: 300px; /* Aumentado por seguridad en móviles */
             padding-bottom: 20px;
             opacity: 1;
         }
@@ -166,9 +183,9 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="absolute top-0 left-0 w-full z-50 p-4 md:p-6 flex flex-col md:flex-row justify-between items-center bg-transparent pointer-events-none">
-        <div class="flex items-center gap-3 mb-4 md:mb-0 pointer-events-auto" data-aos="fade-down">
-            <div class="h-16 w-48 flex items-center justify-start">
+    <nav class="absolute top-0 left-0 w-full z-50 p-4 flex flex-col md:flex-row justify-between items-center bg-transparent pointer-events-none">
+        <div class="flex items-center gap-3 mb-4 md:mb-0 pointer-events-auto w-full md:w-auto justify-center md:justify-start" data-aos="fade-down">
+            <div class="h-12 md:h-16 w-32 md:w-48 flex items-center justify-center md:justify-start">
                 <!-- LOGO LOCAL -->
                 <img src="imagenes/logo.svg" 
                      onerror="this.src='https://placehold.co/200x80/transparent/341C11?text=LOGO+SVG'"
@@ -177,38 +194,41 @@
             </div>
         </div>
         
-        <div class="hidden md:flex gap-4 pointer-events-auto" data-aos="fade-down" data-aos-delay="100">
+        <!-- Botones con ajuste de gap responsive -->
+        <div class="hidden md:flex gap-2 lg:gap-4 pointer-events-auto flex-wrap justify-center" data-aos="fade-down" data-aos-delay="100">
             <a href="#" class="nav-btn">INICIO</a>
             <a href="#beneficios" class="nav-btn">BENEFICIOS</a>
             <a href="#actividades" class="nav-btn">ACTIVIDADES</a>
             <a href="#mision" class="nav-btn">MISIÓN</a>
         </div>
 
-        <a href="#registro" class="hidden md:inline-block bg-brand-green text-white font-bold px-6 py-2 rounded-full shadow-lg hover:bg-brand-coffee transition-all transform hover:scale-105 pointer-events-auto" data-aos="fade-down" data-aos-delay="200">
+        <a href="#registro" class="hidden md:inline-block bg-brand-green text-white font-bold px-4 py-2 lg:px-6 lg:py-2 rounded-full shadow-lg hover:bg-brand-coffee transition-all transform hover:scale-105 pointer-events-auto text-sm lg:text-base" data-aos="fade-down" data-aos-delay="200">
             <i class="fa-brands fa-whatsapp mr-2"></i> Apartar Lugar
         </a>
     </nav>
 
     <!-- HERO SECTION -->
-    <header class="relative bg-brand-beige min-h-screen flex items-center justify-center pt-32 pb-32 overflow-hidden">
+    <!-- Ajuste de padding: pt-24 en móvil, pt-32 en desktop para que no quede tan grande en laptop -->
+    <header class="relative bg-brand-beige min-h-screen flex items-center justify-center pt-24 pb-20 md:pt-32 md:pb-32 overflow-hidden">
         
-        <div class="absolute top-20 left-10 text-brand-yellow/30 text-6xl animate-spin-slow"><i class="fa-solid fa-sun"></i></div>
-        <div class="absolute bottom-40 right-20 text-brand-red/10 text-9xl"><i class="fa-solid fa-heart"></i></div>
+        <div class="absolute top-20 left-10 text-brand-yellow/30 text-4xl md:text-6xl animate-spin-slow"><i class="fa-solid fa-sun"></i></div>
+        <div class="absolute bottom-40 right-20 text-brand-red/10 text-7xl md:text-9xl"><i class="fa-solid fa-heart"></i></div>
 
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
             
             <div class="text-center md:text-left order-2 md:order-1" data-aos="fade-right">
-                <div class="inline-block bg-white text-brand-coffee px-4 py-2 rounded-full text-sm font-bold mb-6 border border-brand-coffee/10 shadow-sm">
+                <div class="inline-block bg-white text-brand-coffee px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6 border border-brand-coffee/10 shadow-sm">
                     ✨ Experiencias inolvidables
                 </div>
-                <h1 class="text-5xl md:text-7xl text-brand-coffee mb-6 drop-shadow-sm leading-tight font-title">
+                <!-- Tamaños de fuente ajustados: text-4xl en móvil, 5xl en tablet/laptop, 7xl en pantallas grandes -->
+                <h1 class="text-4xl md:text-5xl lg:text-7xl text-brand-coffee mb-4 md:mb-6 drop-shadow-sm leading-tight font-title">
                     Creando memorias<br>
                     <span class="text-brand-red relative inline-block">
                         más longevas
-                        <svg class="absolute w-full h-3 -bottom-1 left-0 text-brand-yellow opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" /></svg>
+                        <svg class="absolute w-full h-2 md:h-3 -bottom-1 left-0 text-brand-yellow opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" /></svg>
                     </span>
                 </h1>
-                <p class="text-brand-coffee/80 text-lg md:text-xl mb-10 max-w-lg mx-auto md:mx-0 font-medium leading-relaxed">
+                <p class="text-brand-coffee/80 text-base md:text-lg lg:text-xl mb-8 md:mb-10 max-w-lg mx-auto md:mx-0 font-medium leading-relaxed">
                     Porque los mejores recuerdos son los que perduran. Un evento especial diseñado para conectar, reír y celebrar la sabiduría y la vida de quienes más amamos.
                 </p>
                 
@@ -218,19 +238,19 @@
                     </a>
                 </div>
                 
-                <div class="mt-12 flex flex-wrap justify-center md:justify-start gap-4">
-                    <div class="bg-white/60 backdrop-blur-sm p-3 pr-5 rounded-2xl flex items-center gap-3 border border-white shadow-sm hover:shadow-md transition-shadow cursor-default">
-                        <div class="bg-brand-blue/20 p-2 rounded-full text-brand-blue"><i class="fa-solid fa-user-nurse"></i></div>
+                <div class="mt-8 md:mt-12 flex flex-wrap justify-center md:justify-start gap-3 md:gap-4">
+                    <div class="bg-white/60 backdrop-blur-sm p-2 pr-4 md:p-3 md:pr-5 rounded-2xl flex items-center gap-2 md:gap-3 border border-white shadow-sm hover:shadow-md transition-shadow cursor-default">
+                        <div class="bg-brand-blue/20 p-2 rounded-full text-brand-blue text-xs md:text-base"><i class="fa-solid fa-user-nurse"></i></div>
                         <div class="text-left">
-                            <p class="text-xs text-gray-500 font-bold uppercase">Staff</p>
-                            <p class="text-sm font-bold text-brand-coffee">100% Capacitado</p>
+                            <p class="text-[10px] md:text-xs text-gray-500 font-bold uppercase">Staff</p>
+                            <p class="text-xs md:text-sm font-bold text-brand-coffee">100% Capacitado</p>
                         </div>
                     </div>
-                    <div class="bg-white/60 backdrop-blur-sm p-3 pr-5 rounded-2xl flex items-center gap-3 border border-white shadow-sm hover:shadow-md transition-shadow cursor-default">
-                        <div class="bg-brand-green/20 p-2 rounded-full text-brand-green"><i class="fa-solid fa-shield-heart"></i></div>
+                    <div class="bg-white/60 backdrop-blur-sm p-2 pr-4 md:p-3 md:pr-5 rounded-2xl flex items-center gap-2 md:gap-3 border border-white shadow-sm hover:shadow-md transition-shadow cursor-default">
+                        <div class="bg-brand-green/20 p-2 rounded-full text-brand-green text-xs md:text-base"><i class="fa-solid fa-shield-heart"></i></div>
                         <div class="text-left">
-                            <p class="text-xs text-gray-500 font-bold uppercase">Zona</p>
-                            <p class="text-sm font-bold text-brand-coffee">Ambiente Seguro</p>
+                            <p class="text-[10px] md:text-xs text-gray-500 font-bold uppercase">Zona</p>
+                            <p class="text-xs md:text-sm font-bold text-brand-coffee">Ambiente Seguro</p>
                         </div>
                     </div>
                 </div>
@@ -238,22 +258,23 @@
 
             <div class="relative order-1 md:order-2 flex justify-center" data-aos="zoom-in">
                 <div class="absolute inset-0 border-2 border-dashed border-brand-coffee/20 rounded-full transform scale-110 animate-spin-slow"></div>
-                <div class="relative w-80 md:w-[480px] h-[480px] rounded-full overflow-hidden border-8 border-white shadow-2xl animate-float z-20">
+                <!-- Imagen con tamaños responsivos: w-64 en móvil, w-80 en tablet/laptop pequeña, w-[480px] en desktop -->
+                <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-[480px] lg:h-[480px] rounded-full overflow-hidden border-4 md:border-8 border-white shadow-2xl animate-float z-20">
                     <!-- IMAGEN LOCAL: Hero -->
                     <img src="imagenes/hero-principal.jpg" 
                          onerror="this.src='https://images.unsplash.com/photo-1571579294901-7294db162788?q=80&w=600&auto=format&fit=crop'"
                          alt="Abuelos felices y cuidados" 
                          class="w-full h-full object-cover">
                 </div>
-                <div class="absolute bottom-20 -left-4 bg-white p-4 rounded-xl shadow-xl animate-float-delayed z-30 transform -rotate-3 border-l-4 border-brand-red">
-                    <div class="flex items-center gap-2 mb-1">
+                <div class="absolute bottom-10 md:bottom-20 -left-2 md:-left-4 bg-white p-3 md:p-4 rounded-xl shadow-xl animate-float-delayed z-30 transform -rotate-3 border-l-4 border-brand-red">
+                    <div class="flex items-center gap-1 md:gap-2 mb-1 text-xs md:text-base">
                         <i class="fa-solid fa-star text-brand-yellow"></i>
                         <i class="fa-solid fa-star text-brand-yellow"></i>
                         <i class="fa-solid fa-star text-brand-yellow"></i>
                         <i class="fa-solid fa-star text-brand-yellow"></i>
                         <i class="fa-solid fa-star text-brand-yellow"></i>
                     </div>
-                    <p class="text-brand-coffee font-bold text-xs">"¡La mejor experiencia!"</p>
+                    <p class="text-brand-coffee font-bold text-[10px] md:text-xs">"¡La mejor experiencia!"</p>
                 </div>
             </div>
         </div>
@@ -264,34 +285,35 @@
     </header>
 
     <!-- SECTION: BENEFICIOS -->
-    <section id="beneficios" class="py-24 bg-white relative z-20">
+    <!-- Padding reducido en móviles -->
+    <section id="beneficios" class="py-16 md:py-24 bg-white relative z-20">
         <div class="container mx-auto px-4 text-center">
             <div class="inline-block mb-4">
-                <i class="fa-solid fa-heart-circle-check text-brand-red text-4xl animate-bounce"></i>
+                <i class="fa-solid fa-heart-circle-check text-brand-red text-3xl md:text-4xl animate-bounce"></i>
             </div>
-            <h2 class="text-4xl text-brand-coffee font-title mb-6">¿Por qué este evento es ideal?</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto mb-16">Diseñamos cada detalle pensando en su comodidad, seguridad y sobre todo, en su felicidad.</p>
+            <h2 class="text-3xl md:text-4xl text-brand-coffee font-title mb-4 md:mb-6">¿Por qué este evento es ideal?</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto mb-10 md:mb-16 text-sm md:text-base">Diseñamos cada detalle pensando en su comodidad, seguridad y sobre todo, en su felicidad.</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 rounded-[2rem] bg-brand-beige/50 border border-brand-beige hover:bg-brand-beige transition-colors duration-300" data-aos="fade-up">
-                    <div class="w-16 h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-6 text-brand-blue text-3xl transform -rotate-3">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="p-6 md:p-8 rounded-[2rem] bg-brand-beige/50 border border-brand-beige hover:bg-brand-beige transition-colors duration-300" data-aos="fade-up">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-4 md:mb-6 text-brand-blue text-2xl md:text-3xl transform -rotate-3">
                         <i class="fa-solid fa-brain"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-coffee mb-3">Estimulación Cognitiva</h3>
+                    <h3 class="text-lg md:text-xl font-bold text-brand-coffee mb-2 md:mb-3">Estimulación Cognitiva</h3>
                     <p class="text-gray-600 text-sm">Actividades lúdicas para mantener su mente activa y ágil.</p>
                 </div>
-                <div class="p-8 rounded-[2rem] bg-brand-beige/50 border border-brand-beige hover:bg-brand-beige transition-colors duration-300" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-6 text-brand-red text-3xl transform rotate-3">
+                <div class="p-6 md:p-8 rounded-[2rem] bg-brand-beige/50 border border-brand-beige hover:bg-brand-beige transition-colors duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-4 md:mb-6 text-brand-red text-2xl md:text-3xl transform rotate-3">
                         <i class="fa-solid fa-hands-holding-circle"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-coffee mb-3">Socialización Segura</h3>
+                    <h3 class="text-lg md:text-xl font-bold text-brand-coffee mb-2 md:mb-3">Socialización Segura</h3>
                     <p class="text-gray-600 text-sm">Combate el aislamiento conociendo gente de su edad.</p>
                 </div>
-                <div class="p-8 rounded-[2rem] bg-brand-beige/50 border border-brand-beige hover:bg-brand-beige transition-colors duration-300" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-6 text-brand-green text-3xl transform -rotate-3">
+                <div class="p-6 md:p-8 rounded-[2rem] bg-brand-beige/50 border border-brand-beige hover:bg-brand-beige transition-colors duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-4 md:mb-6 text-brand-green text-2xl md:text-3xl transform -rotate-3">
                         <i class="fa-solid fa-heart-pulse"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-coffee mb-3">Bienestar Emocional</h3>
+                    <h3 class="text-lg md:text-xl font-bold text-brand-coffee mb-2 md:mb-3">Bienestar Emocional</h3>
                     <p class="text-gray-600 text-sm">Una dosis de felicidad que mejora su estado de ánimo.</p>
                 </div>
             </div>
@@ -303,63 +325,63 @@
     </section>
 
     <!-- SECTION: ACTIVIDADES -->
-    <section id="actividades" class="py-24 bg-brand-beige relative z-10">
+    <section id="actividades" class="py-16 md:py-24 bg-brand-beige relative z-10">
         <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-16" data-aos="zoom-in">
-                <span class="text-brand-red font-bold uppercase text-sm tracking-wider bg-white px-3 py-1 rounded-full shadow-sm">Agenda del Día</span>
-                <h2 class="text-5xl text-brand-coffee font-title mt-4">Actividades Adaptadas</h2>
-                <p class="text-brand-coffee/70 mt-4 max-w-2xl mx-auto">Diversión garantizada sin barreras.</p>
+            <div class="text-center mb-10 md:mb-16" data-aos="zoom-in">
+                <span class="text-brand-red font-bold uppercase text-xs md:text-sm tracking-wider bg-white px-3 py-1 rounded-full shadow-sm">Agenda del Día</span>
+                <h2 class="text-3xl md:text-5xl text-brand-coffee font-title mt-4">Actividades Adaptadas</h2>
+                <p class="text-brand-coffee/70 mt-4 max-w-2xl mx-auto text-sm md:text-base">Diversión garantizada sin barreras.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all transform hover:-translate-y-2" data-aos="fade-up">
-                    <div class="h-56 overflow-hidden relative">
+                    <div class="h-48 md:h-56 overflow-hidden relative">
                         <div class="absolute inset-0 bg-brand-coffee/10 group-hover:bg-transparent transition-colors z-10"></div>
                         <!-- IMAGEN LOCAL: Juegos -->
                         <img src="imagenes/actividad-juegos.jpg" 
                              onerror="this.src='https://images.unsplash.com/photo-1606092195730-5d7b9af1ef4d?q=80&w=400'"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
-                    <div class="p-8 relative">
-                        <div class="absolute -top-6 right-6 w-12 h-12 bg-brand-blue rounded-full flex items-center justify-center text-white border-4 border-white shadow-sm">
+                    <div class="p-6 md:p-8 relative">
+                        <div class="absolute -top-5 md:-top-6 right-6 w-10 h-10 md:w-12 md:h-12 bg-brand-blue rounded-full flex items-center justify-center text-white border-4 border-white shadow-sm">
                             <i class="fa-solid fa-dice"></i>
                         </div>
-                        <h3 class="text-2xl font-title text-brand-coffee">Zona de Juegos</h3>
-                        <p class="text-sm text-gray-600 mt-2 mb-4">Bingo, lotería y dominó. Estrategia y risas aseguradas.</p>
-                        <span class="text-brand-blue text-xs font-bold uppercase tracking-wide">● Actividad Sentada</span>
+                        <h3 class="text-xl md:text-2xl font-title text-brand-coffee">Zona de Juegos</h3>
+                        <p class="text-xs md:text-sm text-gray-600 mt-2 mb-4">Bingo, lotería y dominó. Estrategia y risas aseguradas.</p>
+                        <span class="text-brand-blue text-[10px] md:text-xs font-bold uppercase tracking-wide">● Actividad Sentada</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
-                    <div class="h-56 overflow-hidden relative">
+                    <div class="h-48 md:h-56 overflow-hidden relative">
                         <div class="absolute top-4 left-4 z-20 bg-brand-yellow text-brand-coffee text-xs font-bold px-3 py-1 rounded-full shadow-md">⭐ Favorito</div>
                         <!-- IMAGEN LOCAL: Baile -->
                         <img src="imagenes/actividad-baile.jpg" 
                              onerror="this.src='https://images.unsplash.com/photo-1545959711-d703195d222e?q=80&w=400'"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
-                    <div class="p-8 relative">
-                        <div class="absolute -top-6 right-6 w-12 h-12 bg-brand-yellow rounded-full flex items-center justify-center text-white border-4 border-white shadow-sm">
+                    <div class="p-6 md:p-8 relative">
+                        <div class="absolute -top-5 md:-top-6 right-6 w-10 h-10 md:w-12 md:h-12 bg-brand-yellow rounded-full flex items-center justify-center text-white border-4 border-white shadow-sm">
                             <i class="fa-solid fa-music"></i>
                         </div>
-                        <h3 class="text-2xl font-title text-brand-coffee">Música del Ayer</h3>
-                        <p class="text-sm text-gray-600 mt-2 mb-4">Danzón y Boleros en vivo. Recordar es volver a vivir.</p>
-                        <span class="text-brand-yellow text-xs font-bold uppercase tracking-wide">● Bajo impacto</span>
+                        <h3 class="text-xl md:text-2xl font-title text-brand-coffee">Música del Ayer</h3>
+                        <p class="text-xs md:text-sm text-gray-600 mt-2 mb-4">Danzón y Boleros en vivo. Recordar es volver a vivir.</p>
+                        <span class="text-brand-yellow text-[10px] md:text-xs font-bold uppercase tracking-wide">● Bajo impacto</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
-                    <div class="h-56 overflow-hidden relative">
+                    <div class="h-48 md:h-56 overflow-hidden relative">
                         <!-- IMAGEN LOCAL: Arte -->
                         <img src="imagenes/actividad-arte.jpg" 
                              onerror="this.src='https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?q=80&w=400'"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     </div>
-                    <div class="p-8 relative">
-                        <div class="absolute -top-6 right-6 w-12 h-12 bg-brand-red rounded-full flex items-center justify-center text-white border-4 border-white shadow-sm">
+                    <div class="p-6 md:p-8 relative">
+                        <div class="absolute -top-5 md:-top-6 right-6 w-10 h-10 md:w-12 md:h-12 bg-brand-red rounded-full flex items-center justify-center text-white border-4 border-white shadow-sm">
                             <i class="fa-solid fa-palette"></i>
                         </div>
-                        <h3 class="text-2xl font-title text-brand-coffee">Taller de Arte</h3>
-                        <p class="text-sm text-gray-600 mt-2 mb-4">Pintura relajante para expresar su creatividad.</p>
-                        <span class="text-brand-red text-xs font-bold uppercase tracking-wide">● Material incluido</span>
+                        <h3 class="text-xl md:text-2xl font-title text-brand-coffee">Taller de Arte</h3>
+                        <p class="text-xs md:text-sm text-gray-600 mt-2 mb-4">Pintura relajante para expresar su creatividad.</p>
+                        <span class="text-brand-red text-[10px] md:text-xs font-bold uppercase tracking-wide">● Material incluido</span>
                     </div>
                 </div>
             </div>
@@ -371,32 +393,32 @@
     </section>
 
     <!-- SECTION: MISIÓN -->
-    <section id="mision" class="relative bg-brand-blue py-32 overflow-hidden">
+    <section id="mision" class="relative bg-brand-blue py-20 md:py-32 overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 30px 30px;"></div>
 
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-16 relative z-10">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-10 md:gap-16 relative z-10">
             
-            <div class="md:w-1/2 text-white" data-aos="fade-right">
-                <div class="inline-block bg-white text-brand-blue px-4 py-2 rounded-full text-sm font-bold mb-6 border border-white/20 shadow-sm">
+            <div class="md:w-1/2 text-white text-center md:text-left" data-aos="fade-right">
+                <div class="inline-block bg-white text-brand-blue px-4 py-2 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6 border border-white/20 shadow-sm">
                    Nuestra Razón de Ser
                 </div>
                 
-                <h2 class="text-5xl font-title mb-6 drop-shadow-md">Honrando sus historias</h2>
-                <p class="mb-4 text-lg font-medium leading-relaxed opacity-95">
+                <h2 class="text-3xl md:text-5xl font-title mb-4 md:mb-6 drop-shadow-md">Honrando sus historias</h2>
+                <p class="mb-4 text-base md:text-lg font-medium leading-relaxed opacity-95">
                     En <strong>Juega y Recuerda</strong>, creemos que la edad es solo un número y que la diversión no tiene fecha de caducidad.
                 </p>
-                <p class="mb-8 text-lg font-light leading-relaxed opacity-90">
+                <p class="mb-8 text-base md:text-lg font-light leading-relaxed opacity-90">
                     Queremos combatir la soledad con compañía, el silencio con música y la rutina con juegos.
                 </p>
             </div>
 
             <div class="md:w-1/2 relative" data-aos="fade-left">
-                <i class="fa-solid fa-quote-right text-white/20 text-9xl absolute -top-10 -right-5 transform scale-150"></i>
+                <i class="fa-solid fa-quote-right text-white/20 text-7xl md:text-9xl absolute -top-6 md:-top-10 -right-2 md:-right-5 transform scale-150"></i>
                 <!-- IMAGEN LOCAL: Misión -->
                 <img src="imagenes/mision-historia.jpg" 
                      onerror="this.src='https://images.unsplash.com/photo-1563214371-3323086397e1?q=80&w=600&auto=format&fit=crop'"
                      alt="Abuelos Abrazados" 
-                     class="relative z-10 rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-8 border-white/30">
+                     class="relative z-10 rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-8 border-white/30 w-full max-w-md mx-auto md:max-w-full">
             </div>
         </div>
 
@@ -406,43 +428,43 @@
     </section>
 
     <!-- SECTION: PREGUNTAS Y RESPUESTAS -->
-    <section id="faq" class="py-24 bg-white relative">
+    <section id="faq" class="py-16 md:py-24 bg-white relative">
         <div class="container mx-auto px-4 max-w-3xl">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-4xl text-brand-coffee font-title">Preguntas y Respuestas</h2>
+            <div class="text-center mb-10 md:mb-12" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl text-brand-coffee font-title">Preguntas y Respuestas</h2>
                 <div class="w-20 h-1 bg-brand-blue mx-auto mt-4 rounded-full"></div>
             </div>
 
             <div class="space-y-4">
                 <div class="faq-item bg-brand-beige/30 rounded-2xl overflow-hidden" data-aos="fade-up">
                     <input type="checkbox" id="faq1" class="hidden">
-                    <label for="faq1" class="flex justify-between items-center p-6 cursor-pointer hover:bg-brand-beige/60 transition-colors">
-                        <span class="font-bold text-brand-coffee">¿El evento es realmente gratuito?</span>
+                    <label for="faq1" class="flex justify-between items-center p-4 md:p-6 cursor-pointer hover:bg-brand-beige/60 transition-colors">
+                        <span class="font-bold text-brand-coffee text-sm md:text-base">¿El evento es realmente gratuito?</span>
                         <i class="fa-solid fa-chevron-down text-brand-coffee transition-transform duration-300"></i>
                     </label>
-                    <div class="faq-content px-6 text-gray-600 max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="faq-content px-4 md:px-6 text-gray-600 max-h-0 overflow-hidden transition-all duration-300 text-sm md:text-base">
                         <p class="pb-6">¡Sí, al 100%! Es una iniciativa social. Incluye actividades y kit de bienvenida.</p>
                     </div>
                 </div>
 
                 <div class="faq-item bg-brand-beige/30 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                     <input type="checkbox" id="faq2" class="hidden">
-                    <label for="faq2" class="flex justify-between items-center p-6 cursor-pointer hover:bg-brand-beige/60 transition-colors">
-                        <span class="font-bold text-brand-coffee">¿Es necesario que yo me quede?</span>
+                    <label for="faq2" class="flex justify-between items-center p-4 md:p-6 cursor-pointer hover:bg-brand-beige/60 transition-colors">
+                        <span class="font-bold text-brand-coffee text-sm md:text-base">¿Es necesario que yo me quede?</span>
                         <i class="fa-solid fa-chevron-down text-brand-coffee transition-transform duration-300"></i>
                     </label>
-                    <div class="faq-content px-6 text-gray-600 max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="faq-content px-4 md:px-6 text-gray-600 max-h-0 overflow-hidden transition-all duration-300 text-sm md:text-base">
                         <p class="pb-6">Es opcional. Puedes quedarte a disfrutar o dejarlos bajo nuestra supervisión profesional.</p>
                     </div>
                 </div>
 
                 <div class="faq-item bg-brand-beige/30 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                     <input type="checkbox" id="faq3" class="hidden">
-                    <label for="faq3" class="flex justify-between items-center p-6 cursor-pointer hover:bg-brand-beige/60 transition-colors">
-                        <span class="font-bold text-brand-coffee">¿Accesibilidad para silla de ruedas?</span>
+                    <label for="faq3" class="flex justify-between items-center p-4 md:p-6 cursor-pointer hover:bg-brand-beige/60 transition-colors">
+                        <span class="font-bold text-brand-coffee text-sm md:text-base">¿Accesibilidad para silla de ruedas?</span>
                         <i class="fa-solid fa-chevron-down text-brand-coffee transition-transform duration-300"></i>
                     </label>
-                    <div class="faq-content px-6 text-gray-600 max-h-0 overflow-hidden transition-all duration-300">
+                    <div class="faq-content px-4 md:px-6 text-gray-600 max-h-0 overflow-hidden transition-all duration-300 text-sm md:text-base">
                         <p class="pb-6">¡Totalmente! El parque cuenta con rampas y accesos pavimentados.</p>
                     </div>
                 </div>
@@ -451,34 +473,34 @@
     </section>
 
     <!-- SECTION: MAPA -->
-    <section id="ubicacion" class="py-20 bg-brand-beige relative border-t border-brand-coffee/5">
+    <section id="ubicacion" class="py-16 md:py-20 bg-brand-beige relative border-t border-brand-coffee/5">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl text-brand-coffee font-title">Ubicación</h2>
+            <div class="text-center mb-8 md:mb-10">
+                <h2 class="text-3xl md:text-4xl text-brand-coffee font-title">Ubicación</h2>
             </div>
             <div class="flex flex-col lg:flex-row gap-8 bg-white rounded-3xl p-4 shadow-xl overflow-hidden" data-aos="zoom-in">
                 
-                <div class="lg:w-1/3 p-8 flex flex-col justify-center bg-brand-yellow/10 rounded-2xl">
-                    <h3 class="text-2xl font-bold text-brand-coffee mb-2 font-title">Parque Ecológico Huayamilpas</h3>
-                    <p class="text-gray-700 font-medium mb-6">Coyoacán, CDMX</p>
+                <div class="lg:w-1/3 p-6 md:p-8 flex flex-col justify-center bg-brand-yellow/10 rounded-2xl">
+                    <h3 class="text-xl md:text-2xl font-bold text-brand-coffee mb-2 font-title">Parque Ecológico Huayamilpas</h3>
+                    <p class="text-gray-700 font-medium mb-6 text-sm md:text-base">Coyoacán, CDMX</p>
                     
                     <div class="space-y-4">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-brand-coffee text-white flex items-center justify-center"><i class="fa-solid fa-calendar-day"></i></div>
-                            <span class="font-bold text-brand-coffee">Sábado 25 Nov</span>
+                            <span class="font-bold text-brand-coffee text-sm md:text-base">Sábado 25 Nov</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-brand-blue text-white flex items-center justify-center"><i class="fa-regular fa-clock"></i></div>
-                            <span class="font-bold text-brand-coffee">10:00 AM - 4:00 PM</span>
+                            <span class="font-bold text-brand-coffee text-sm md:text-base">10:00 AM - 4:00 PM</span>
                         </div>
                     </div>
                     
-                    <a href="https://maps.google.com/?q=Parque+Ecológico+Huayamilpas" target="_blank" class="mt-8 block w-full bg-brand-coffee text-white font-bold py-3 rounded-xl text-center shadow hover:bg-brand-blue transition-colors">
+                    <a href="https://maps.google.com/?q=Parque+Ecológico+Huayamilpas" target="_blank" class="mt-8 block w-full bg-brand-coffee text-white font-bold py-3 rounded-xl text-center shadow hover:bg-brand-blue transition-colors text-sm md:text-base">
                         <i class="fa-solid fa-map-pin mr-2"></i> Ver en Google Maps
                     </a>
                 </div>
 
-                <div class="lg:w-2/3 h-80 rounded-2xl overflow-hidden relative">
+                <div class="lg:w-2/3 h-64 md:h-80 rounded-2xl overflow-hidden relative">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.577907572626!2d-99.15396592398555!3d19.34415848191632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fe06e570f723%3A0x67a35368a1d75c87!2sParque%20Ecol%C3%B3gico%20Huayamilpas!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe" 
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -487,29 +509,29 @@
         </div>
     </section>
 
-    <!-- FOOTER: BEIGE OSCURO Y TEXTOS CAFÉ -->
-    <footer id="registro" class="bg-brand-dark-beige relative pt-40 pb-10 text-brand-coffee overflow-hidden">
-        <!-- Curva superior (color beige claro para conectar) -->
-        <div class="absolute top-0 left-0 w-full h-16 bg-brand-beige rounded-b-[50%]"></div>
+    <!-- FOOTER: Padding responsive (pt-24 en móvil, pt-40 en desktop) -->
+    <footer id="registro" class="bg-brand-dark-beige relative pt-24 md:pt-40 pb-10 text-brand-coffee overflow-hidden">
+        <!-- Curva superior -->
+        <div class="absolute top-0 left-0 w-full h-10 md:h-16 bg-brand-beige rounded-b-[50%]"></div>
 
         <div class="container mx-auto px-4 relative z-10 text-center">
             
-            <div class="max-w-3xl mx-auto mb-16" data-aos="zoom-in">
+            <div class="max-w-3xl mx-auto mb-10 md:mb-16" data-aos="zoom-in">
                 <!-- Texto cambiado a CAFÉ -->
-                <h2 class="text-4xl md:text-5xl font-title mb-6 text-brand-coffee">¡Acceso Ilimitado!</h2>
-                <p class="text-xl opacity-90 mb-8 font-medium">Todos son bienvenidos. Confirma tu asistencia por WhatsApp para preparar el kit de bienvenida.</p>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-title mb-4 md:mb-6 text-brand-coffee">¡Acceso Ilimitado!</h2>
+                <p class="text-base md:text-xl opacity-90 mb-6 md:mb-8 font-medium">Todos son bienvenidos. Confirma tu asistencia por WhatsApp para preparar el kit de bienvenida.</p>
                 
-                <a href="https://wa.me/51937196316?text=Hola,%20quiero%20inscribir%20a%20mi%20familiar%20al%20evento%20Juega%20y%20Recuerda" target="_blank" class="shine-btn inline-flex items-center gap-4 bg-green-500 text-white px-10 py-5 rounded-full font-bold text-xl shadow-2xl hover:bg-green-600 transition-all">
-                    <i class="fa-brands fa-whatsapp text-4xl"></i>
+                <a href="https://wa.me/51937196316?text=Hola,%20quiero%20inscribir%20a%20mi%20familiar%20al%20evento%20Juega%20y%20Recuerda" target="_blank" class="shine-btn inline-flex items-center gap-3 md:gap-4 bg-green-500 text-white px-6 py-3 md:px-10 md:py-5 rounded-full font-bold text-base md:text-xl shadow-2xl hover:bg-green-600 transition-all w-full md:w-auto justify-center">
+                    <i class="fa-brands fa-whatsapp text-3xl md:text-4xl"></i>
                     <div class="text-left leading-tight">
-                        <span class="block text-sm uppercase opacity-90">Inscribir ahora GRATIS</span>
-                        <span class="block text-2xl">+51 937 196 316</span>
+                        <span class="block text-xs md:text-sm uppercase opacity-90">Inscribir ahora GRATIS</span>
+                        <span class="block text-lg md:text-2xl">+51 937 196 316</span>
                     </div>
                 </a>
             </div>
 
             <div class="border-t border-brand-coffee/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                 <div class="h-12 w-40 flex items-center justify-center opacity-80">
+                 <div class="h-10 md:h-12 w-32 md:w-40 flex items-center justify-center opacity-80">
                     <!-- LOGO LOCAL FOOTER -->
                     <img src="imagenes/logo.svg" 
                          onerror="this.src='https://placehold.co/200x80/transparent/341C11?text=LOGO+SVG'"
@@ -517,7 +539,7 @@
                          class="h-full w-auto object-contain">
                 </div>
                 <!-- Texto cambiado a CAFÉ -->
-                <p class="text-brand-coffee/80 text-sm">© 2023 Juega y Recuerda.</p>
+                <p class="text-brand-coffee/80 text-xs md:text-sm">© 2023 Juega y Recuerda.</p>
             </div>
         </div>
     </footer>
